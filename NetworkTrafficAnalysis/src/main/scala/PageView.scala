@@ -3,15 +3,18 @@ import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.api.windowing.time.Time
 
+/**
+  * 网站总浏览量（PV）的统计
+  * 用户每次打开一个页面便记录1次PV，多次打开同一页面则浏览量累计
+  */
 object PageView {
     
     def main(args: Array[String]): Unit = {
-        val resourcesPath = getClass.getResource("/UserBehaviorTest.csv")
         val env = StreamExecutionEnvironment.getExecutionEnvironment
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
         env.setParallelism(1)
     
-        val stream = env.readTextFile(resourcesPath.getPath)
+        val stream = env.readTextFile("C:\\Users\\Archer\\IdeaProjects\\UserBehaviorAnalysis\\NetworkTrafficAnalysis\\src\\main\\resources\\UserBehavior.csv")
                 .map(data => {
                     val dataArray = data.split(",")
                     UserBehavior(dataArray(0).toLong, dataArray(1).toLong, dataArray(2).toInt, dataArray(3), dataArray(4).toLong)

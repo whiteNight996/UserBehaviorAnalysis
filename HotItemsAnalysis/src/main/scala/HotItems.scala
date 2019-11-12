@@ -15,6 +15,15 @@ import org.apache.flink.util.Collector
 
 import scala.collection.mutable.ListBuffer
 
+/**
+  * 实时热门商品 : 每隔5分钟输出最近一小时内点击量最多的前N个商品
+  *
+  * 业务分解：
+  *     1.抽取出业务时间戳，告诉Flink框架基于业务时间做窗口
+  *     2.过滤出点击行为数据
+  *     3.按一小时的窗口大小，每5分钟统计一次，做滑动窗口聚合（Sliding Window）
+  *     4.按每个窗口聚合，输出每个窗口中点击量前N名的商品
+  */
 object HotItems {
     def main(args: Array[String]): Unit = {
         
@@ -39,7 +48,7 @@ object HotItems {
                 //设置滑动窗口
                 .keyBy("itemId")
                 .timeWindow(Time.minutes(60),Time.minutes(5))
-                .aggregate(new CountAgg,new WindowResultFunction)
+                .aggregate(new CountAgg,new WindowResultFunction) //窗口聚合分为：增量窗口聚合和全窗口增量聚合，这里联合使用
                 .keyBy("windowEnd")
                 .process(new TopHotItems(3))
                         

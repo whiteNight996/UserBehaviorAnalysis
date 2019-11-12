@@ -7,6 +7,14 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow
 import org.apache.flink.util.Collector
 import redis.clients.jedis.Jedis
 
+/**
+  * 网站独立访客数（UV）的统计
+  * 一段时间（比如一小时）内访问网站的总人数，1天内同一访客的多次访问只记录为一个访客。
+  *
+  * 1)统计埋点日志中的 pv 行为，利用 Set 数据结构进行去重
+  * 2)对于超大规模的数据，可以考虑用布隆过滤器进行去重(Bloom Filter)
+  *
+  */
 object UniqueVisitor {
     def main(args: Array[String]): Unit = {
     

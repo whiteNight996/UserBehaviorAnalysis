@@ -12,6 +12,7 @@
         <module>HotItemsAnalysis</module>
         <module>NetworkTrafficAnalysis</module>
         <module>OrderTimeoutDetect</module>
+        <module>MarketAnalysis</module>
     </modules>
 
     <properties>
