@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="HotItemsAnalysis" />
         <module name="NetworkTrafficAnalysis" />
+        <module name="OrderTimeoutDetect" />
       </profile>
     </annotationProcessing>
   </component>
