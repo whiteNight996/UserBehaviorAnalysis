@@ -1,2 +1,2 @@
 # UserBehaviorAnalysis
-flink-project -- My Flink Practice
+Flink Practice
